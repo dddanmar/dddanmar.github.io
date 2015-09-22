@@ -4,7 +4,7 @@ email: dddanmar@gmail.com
 description: > # this means to ignore newlines until "baseurl:"
   DevOps, Infrastructure and Code.
   What's new and flash?
-baseurl: "/" # the subpath of your site, e.g. /blog/
+baseurl: "" # the subpath of your site, e.g. /blog/
 url: "http://dddanmar.net" # the base hostname & protocol for your site
 twitter_username: dddanmar
 github_username:  dddanmar
