@@ -1,14 +1,30 @@
-name: dddanmar
-markdown: redcarpet
-pygments: true
-github: https://www.github.com/dddanmar
-about: DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast.
-urls:
-    - text: github
-      url: https://github.com/dddanmar
-    - text: email
-      url: mailto:dddanmar@gmail.com
-    - text: guvera
-      url: http://guvera.com
-    - text: fradio
-      url: http://fradio.com
+# Site settings
+title: dddanmar.net
+email: dddanmar@gmail.com
+url: http://dddanmar.net
+description: "DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast. Info, hacks and reposts."
+
+# Color settings (hex-codes without the leading hash-tag)
+color:
+  primary-dark: '#000000'
+  links: '#219ab3'
+
+# Footer settings
+footer: dddanmar.net
+
+# Social networks usernames (many more available: google-plus, flickr, dribbble, pinterest, instagram, tumblr, linkedin, etc.)
+social:
+  - title: twitter
+    url: https://twitter.com/dddanmar
+  - title: facebook
+    url: https://facebook.com/dddanmar
+  #- title: stack-overflow
+  #  url: http://stackoverflow.com/questions/tagged/jekyll
+  - title: bitbucket
+    url: http://bitbucket.org/dddanmar
+  - title: github
+    url: https://github.com/dddanmar
+
+# Build settings
+markdown: kramdown
+permalink: pretty
