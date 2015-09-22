@@ -1,13 +1,14 @@
-# Site settings
-title: dddanmar.net
-email: dddanmar@gmail.com
-description: > # this means to ignore newlines until "baseurl:"
-  DevOps, Infrastructure and Code.
-  What's new and flash?
-# baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://dddanmar.net/" # the base hostname & protocol for your site
-twitter_username: dddanmar
-github_username:  dddanmar
-
-# Build settings
-markdown: kramdown
+name: dddanmar.net
+markdown: redcarpet
+pygments: true
+github: https://www.github.com/dddanmar
+about: DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast.
+urls:
+    - text: github
+      url: https://github.com/dddanmar
+    - text: email
+      url: mailto:dddanmar@gmail.com
+    - text: guvera
+      url: http://guvera.com
+    - text: fradio
+      url: http://fradio.com
