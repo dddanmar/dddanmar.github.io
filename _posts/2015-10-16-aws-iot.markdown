@@ -24,7 +24,7 @@ header-img: "img/post-bg-01.jpg"
 
 <h2 class="section-heading">The Raspberry Pi Button - Hardware</h2>
 
-<p>I've just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled <a href="https://www.arduino.cc/">Arduino</a> were placed on the table for guests to push and take a smile.</p>
+<p>I've just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled <a href="https://www.arduino.cc/">Arduino</a> were placed on the table for guests to push and take a photo.</p>
 
  <p>The box is well over sized for the hardware that was used inside of it, and can easily fit a <A href="http://raspberry.piaustralia.com.au/products/raspberry-pi-2-model-b">Rasperry Pi</a>, <A href="http://www.jaycar.com.au/Sight-%26-Sound-Personal/MP3-iPod-Accessories/MP3-iPod-Accessories/5000mAh-Portable-Rechargeable-Power-Bank/p/MB3724">USB battery pack</a>, <a href="http://www.jaycar.com.au/IT-Products/Networking/Wireless-Hardware-%26-Accessories/N150-Nano-USB-2-0-Wireless-Network-Adaptor/p/YN8309">Wifi module</a>, and of course, <a href="http://www.jaycar.com.au/Electromechanical-Components/Switches/Pushbutton/SWITCH-PUSH-WATPRF-MOM-SPST-5ADC-D%3D30MM/p/SP0732">the button</a>.</p>
 
