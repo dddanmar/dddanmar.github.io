@@ -47,7 +47,7 @@ header-img: "img/post-bg-01.jpg"
 <h2 class="section-heading">The Raspberry Pi Button - Software</h2>
 <p>The Pi's button is driven from the <a href="https://github.com/aws/aws-iot-device-sdk-js">NodeJS SDK</a> supplied from AWS.</p>
 
-<p>I'll admit I spent a fair bit of time trying to work out how work with the SDK, and after some hair pulling I was found this lovely <a href="https://github.com/sreid/aws-iot-raspberry-pi-how-to">github repo</a> from <a href="https://github.com/sreid/">sreid</a>. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.</p>
+<p>I'll admit I spent a fair bit of time trying to work out how to work with the SDK, and after some hair pulling I was found this lovely <a href="https://github.com/sreid/aws-iot-raspberry-pi-how-to">github repo</a> from <a href="https://github.com/sreid/">sreid</a>. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.</p>
 
 <p>For the sender, using the npm module <a href="https://www.npmjs.com/package/onoff">'onoff'</a> makes it very easy to read the GPIO status of a pin with NodeJS. All I needed to do here was put a new block at the bottom of the pi.js file from <a href="https://github.com/sreid">sreid's</a> <a href="https://github.com/sreid/aws-iot-raspberry-pi-how-to">repository</a>, and send that button state change off to AWS.</p>
 
