@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>dddanmar.net</title>
+    <description>DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast.</description>
+    <link>http://dddanmar.net/</link>
+    <atom:link href="http://dddanmar.net/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sat, 17 Oct 2015 18:38:44 +1000</pubDate>
+    <lastBuildDate>Sat, 17 Oct 2015 18:38:44 +1000</lastBuildDate>
+    <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Fun with AWS IoT Beta</title>
+        <description>&lt;blockquote&gt;&lt;a href=&quot;https://github.com/dddanmar/aws-iot-raspberry-pi-button&quot;&gt;tl;dr; code here https://github.com/dddanmar/aws-iot-raspberry-pi-button&lt;/a&gt;&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;a href=&quot;https://aws.amazon.com&quot;&gt;AWS&lt;/a&gt; recently announced the Beta availability of their new platform for the &lt;a href=&quot;http://aws.amazon.com/iot/&quot;&gt;Internet of Things&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The platform aims to be the communications broker between IoT devices and Amazon services such as &lt;a href=&quot;https://aws.amazon.com/lambda&quot;&gt;Lambda&lt;/a&gt;, &lt;a href=&quot;https://aws.amazon.com/s3&quot;&gt;S3&lt;/a&gt;, &lt;a href=&quot;https://aws.amazon.com/dynamodb&quot;&gt;DynamoDB&lt;/a&gt; and more.&lt;/p&gt;
+
+&lt;p&gt;Communication between devices is handled either via &lt;a href=&quot;http://mqtt.org/&quot;&gt;MQTT&lt;/a&gt; or their REST API.&lt;/p&gt;
+
+&lt;p&gt;SDKs are available for &lt;a href=&quot;https://github.com/aws/aws-iot-device-sdk-embedded-C&quot;&gt;Embedded C&lt;/a&gt; and &lt;a href=&quot;https://github.com/aws/aws-iot-device-sdk-js&quot;&gt;NodeJS&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Hardware packages are &lt;a href=&quot;https://aws.amazon.com/partners/iot-hardware/&quot;&gt;available from online retailers&lt;/a&gt; that are packaged specifically for AWS IoT, and recently it was announced Amazon were releasing a small set of &lt;a href=&quot;https://aws.amazon.com/iot/button/&quot;&gt;Dash buttons&lt;/a&gt; with firmware intended to directly communicate with AWS IoT.&lt;/p&gt;
+
+&lt;p&gt;However, I&#39;m not in a position to go out and buy any new gear at the moment, so I&#39;m going to look at how to use the platform with both a &lt;a href=&quot;https://www.raspberrypi.org/&quot;&gt;Raspberry Pi&lt;/a&gt; and an &lt;a href=&quot;http://www.esp8266.com/&quot;&gt;ESP8266&lt;/a&gt; stand alone Wi-Fi Module. Also, I&#39;m not the biggest fan of &lt;a href=&quot;https://nodejs.org/en/&quot;&gt;NodeJS&lt;/a&gt; so I want to investigate how to subscribe to the MQTT feed with &lt;a href=&quot;https://www.python.org/&quot;&gt;Python&lt;/a&gt; for some flexability.&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;The Raspberry Pi Button - Hardware&lt;/h2&gt;
+
+&lt;p&gt;I&#39;ve just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled &lt;a href=&quot;https://www.arduino.cc/&quot;&gt;Arduino&lt;/a&gt; were placed on the table for guests to push and take a smile.&lt;/p&gt;
+
+&lt;p&gt;The box is well over sized for the hardware that was used inside of it, and can easily fit a &lt;a href=&quot;http://raspberry.piaustralia.com.au/products/raspberry-pi-2-model-b&quot;&gt;Rasperry Pi&lt;/a&gt;, &lt;a href=&quot;http://www.jaycar.com.au/Sight-%26-Sound-Personal/MP3-iPod-Accessories/MP3-iPod-Accessories/5000mAh-Portable-Rechargeable-Power-Bank/p/MB3724&quot;&gt;USB battery pack&lt;/a&gt;, &lt;a href=&quot;http://www.jaycar.com.au/IT-Products/Networking/Wireless-Hardware-%26-Accessories/N150-Nano-USB-2-0-Wireless-Network-Adaptor/p/YN8309&quot;&gt;Wifi module&lt;/a&gt;, and of course, &lt;a href=&quot;http://www.jaycar.com.au/Electromechanical-Components/Switches/Pushbutton/SWITCH-PUSH-WATPRF-MOM-SPST-5ADC-D%3D30MM/p/SP0732&quot;&gt;the button&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For the button, any momentary switch will do. For my uses I have used Pin7 as it&#39;s internal pullup is already defined in the &lt;a href=&quot;https://www.npmjs.com/package/onoff&quot;&gt;onoff npm package&lt;/a&gt; we will use in the software. Less wires and resistors the better.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/rpi-button-01.jpg&quot; alt=&quot;RpiButton&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;RpiButton, a box, a button, a RasPi, Wifi module and battery.&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/rpi-button-03.jpg&quot; alt=&quot;RpiButton&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;RpiButton, parts crammed into the box.&lt;/span&gt;
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/rpi-button-02.jpg&quot; alt=&quot;RpiButton&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;RpiButton, all sealed up.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;The Raspberry Pi Button - Software&lt;/h2&gt;
+&lt;p&gt;The Pi&#39;s button is driven from the &lt;a href=&quot;https://github.com/aws/aws-iot-device-sdk-js&quot;&gt;NodeJS SDK&lt;/a&gt; supplied from AWS.&lt;/p&gt;
+
+&lt;p&gt;I&#39;ll admit I spent a fair bit of time trying to work out how work with the SDK, and after some hair pulling I was found this lovely &lt;a href=&quot;https://github.com/sreid/aws-iot-raspberry-pi-how-to&quot;&gt;github repo&lt;/a&gt; from &lt;a href=&quot;https://github.com/sreid/&quot;&gt;sreid&lt;/a&gt;. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.&lt;/p&gt;
+
+&lt;p&gt;For the sender, using the npm module &lt;a href=&quot;https://www.npmjs.com/package/onoff&quot;&gt;&#39;onoff&#39;&lt;/a&gt; makes it very easy to read the GPIO status of a pin with NodeJS. All I needed to do here was put a new block at the bottom of the pi.js file from &lt;a href=&quot;https://github.com/sreid&quot;&gt;sreid&#39;s&lt;/a&gt; &lt;a href=&quot;https://github.com/sreid/aws-iot-raspberry-pi-how-to&quot;&gt;repository&lt;/a&gt;, and send that button state change off to AWS.&lt;/p&gt;
+
+&lt;p&gt;I&#39;ve created a fork of the repo with my extra button code and pushed it up &lt;a href=&quot;https://github.com/dddanmar/aws-iot-raspberry-pi-button&quot;&gt;here&lt;/a&gt;. &lt;/p&gt;
+
+&lt;p&gt;You should be able to clone my repo, set up the device, download the certificates as sreid&#39;s &lt;a href=&quot;https://github.com/sreid/aws-iot-raspberry-pi-how-to/blob/master/README.md&quot;&gt;README.md&lt;/a&gt; file describes, plug your switch into GPIO7 and GROUND, start the script and see the accept messages back from Amazon on each update.&lt;/p&gt;
+
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/941c394d24631b54dbbc.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+&lt;p&gt;That&#39;s it, you can set your NodeJS application to start on startup with something like &lt;a href=&quot;https://github.com/chovy/node-startup&quot;&gt;node-startup&lt;/a&gt;, box it all up and turn the RpiButton on.&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;The Raspberry Pi Button - Python Receiver&lt;/h2&gt;
+
+&lt;p&gt;Now the button itself is set up and posting data to Amazon, it&#39;s time to think of how a this data can be consumed and used.&lt;/p&gt;
+
+&lt;p&gt;As I mentioned earlier, I&#39;m not the biggest fan of NodeJS, so I was very keen to try out some Python to break free from the SDKs.&lt;/p&gt;
+
+&lt;p&gt;The main messaging system with AWS IoT is the nice and simple MQTT - this is a selection of topics you can subscribe to based on any event you want to listen to and react upon.&lt;/p&gt;
+
+&lt;p&gt;The event we want to listen in on is if the RpiButton&#39;s state has changed, and specifically if the button state is 0 (button is pushed down). The topics can be a bit confusing, the one we are interested in is the thing&#39;s shadow&#39;s accepted updates.&lt;/p&gt;
+&lt;p&gt;Topic: $aws/things/RpiButton/shadow/update/accepted&lt;/p&gt;
+&lt;p&gt;To find more topics available, check the listing in the &lt;a href=&quot;http://docs.aws.amazon.com/iot/latest/developerguide/thing-shadow-mqtt.html&quot;&gt;IoT documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Python has a fantastic MQTT library called &lt;a href=&quot;https://pypi.python.org/pypi/paho-mqtt/1.1&quot;&gt;Paho MQTT&lt;/a&gt;. Install it from pip and try the code below, updating the certificates and key to the path you have downloaded the files to previously.&lt;/p&gt;
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/134a18c7e409fd5d47a1.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+&lt;p&gt;In my scenario, I have the github repo cloned on the Pi driving the button, and on my laptop to run the mqtt_client.py file.&lt;/p&gt;
+&lt;p&gt;If all goes well, you should push the button on the Pi, and a doorbell sound should play through the client machine.&lt;/p&gt;
+&lt;p&gt;We&#39;ve made an IoT doorbell!&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;ESP8266 Button&lt;/h2&gt;
+
+&lt;p&gt;Now I&#39;ve got a bit of a better handle on the platform, it appears simple to interact with provided you can run an MQTT client on a device. The Rpi is too overpowered for the application is here, and it screams potential for the cheap WiFi module, the &lt;a href=&quot;http://esp8266.com&quot;&gt;ESP8266&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Unfortunatley it looks like the two leading MQTT implementations for the ESP8266, &lt;a href=&quot;https://github.com/tuanpmt/esp_mqtt&quot;&gt;esp_mqtt&lt;/a&gt; and &lt;a href=&quot;https://www.arduino.cc/&quot;&gt;ESPDuino&lt;/a&gt; both do not support client certificates, so we will look at &lt;a href=&quot;https://www.arduino.cc/&quot;&gt;Curl&lt;/a&gt; and in turn the ESP8266 with a RESTful request in the next blog post.&lt;/p&gt;
+
+</description>
+        <pubDate>Fri, 16 Oct 2015 22:00:00 +1000</pubDate>
+        <link>http://dddanmar.net/2015/10/16/aws-iot/</link>
+        <guid isPermaLink="true">http://dddanmar.net/2015/10/16/aws-iot/</guid>
+        
+        
+      </item>
+    
+  </channel>
+</rss>
