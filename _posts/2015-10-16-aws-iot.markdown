@@ -61,7 +61,7 @@ header-img: "img/post-bg-01.jpg"
 
 <h2 class="section-heading">The Raspberry Pi Button - Python Receiver</h2>
 
-<p>Now the button itself is set up and posting data to Amazon, it's time to think of how a this data can be consumed and used.</p>
+<p>Now the button itself is set up and posting data to Amazon, it's time to think of how this data can be consumed and used.</p>
 
 <p>As I mentioned earlier, I'm not the biggest fan of NodeJS, so I was very keen to try out some Python to break free from the SDKs.</p>
 
