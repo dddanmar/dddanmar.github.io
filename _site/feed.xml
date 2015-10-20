@@ -1,13 +1,120 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>dddanmar.net</title>
+    <title>dddanmar</title>
     <description>DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast.</description>
     <link>http://dddanmar.net/</link>
     <atom:link href="http://dddanmar.net/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 17 Oct 2015 18:40:47 +1000</pubDate>
-    <lastBuildDate>Sat, 17 Oct 2015 18:40:47 +1000</lastBuildDate>
+    <pubDate>Tue, 20 Oct 2015 13:35:57 +1000</pubDate>
+    <lastBuildDate>Tue, 20 Oct 2015 13:35:57 +1000</lastBuildDate>
     <generator>Jekyll v2.5.3</generator>
+    
+      <item>
+        <title>Cheap cheap wedding RSVP site</title>
+        <description>&lt;p&gt;My (now)-wife and I were married at the start of October this year.&lt;/p&gt;
+
+&lt;p&gt;I wanted a nice way to get the RSVPs from our wedding guests, but needed a cheap way to do this.&lt;/p&gt;
+
+&lt;p&gt;AWS provide a nice and simple way of deploying static HTML and JS websites, through &lt;a href=&quot;http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html&quot;&gt;Amazon S3 Static hosting&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;If you name your S3 Bucket the same name as your incoming domain name, you can seamlessly host the page is if it was on your own server (racking up usage charges every hour).&lt;/p&gt;
+
+&lt;p&gt;The best part about S3 - you are only paying for the traffic you are using. Since we had ~50 guests, the site will only really be loaded a maximum of 100 times.&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;danandcassgetmarried.com - The Site&lt;/h2&gt;
+
+&lt;p&gt;Our requirements were simple - a landing page with a button for RSVP, and a form for the guests to enter their RSVP details.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass01.png&quot; alt=&quot;danandcassgetmarried.com 01&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The Landing Page&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass02.png&quot; alt=&quot;danandcassgetmarried.com 02&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The RSVP Form&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;The page itself is very simple, you can &lt;a href=&quot;https://github.com/dddanmar/danandcassgetmarried.com&quot;&gt;view it on GitHub here&lt;/a&gt;.
+&lt;p&gt;The main guts of the Javascript here is to simply post the request off to AWS Gateway.
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/2780bdf781e476799d03.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+
+&lt;h2 class=&quot;section-heading&quot;&gt;danandcassgetmarried.com - The API Gateway&lt;/h2&gt;
+
+&lt;p&gt;Amazon&#39;s &lt;a href=&quot;https://aws.amazon.com/api-gateway/&quot;&gt;API gateway&lt;/a&gt; allows you to build HTTP endpoints that can be consumed by anything that can make the request. For Javascript, we need to enable CORS, which can be done through the convoluted process listed in the &lt;a href=&quot;http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html&quot;&gt;Amazon documentation here&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;For my use case, I only need one endpoint created, a POST method on the endpoint /rsvp&lt;/p&gt;
+
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass03.png&quot; alt=&quot;danandcassgetmarried.com 03&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The API Gateway Endpoint&lt;/span&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;danandcassgetmarried.com - The Lambda Function&lt;/h2&gt;
+
+&lt;p&gt;Lambda is an amazing little service from AWS that allows you to run NodeJS (and now Python) code to interact with other AWS services.&lt;/p&gt;
+
+&lt;p&gt;The function below is receiving data from the webform, under the object &#39;event&#39;. All we need to do is extract those details and create a string for a nice email message we can read when our guest RSVPs&lt;/p&gt;
+
+&lt;p&gt;&lt;noscript&gt;&lt;pre&gt;400: Invalid request
+&lt;/pre&gt;&lt;/noscript&gt;&lt;script src=&quot;https://gist.github.com/b515789a2ddde01b130b.js&quot;&gt; &lt;/script&gt;&lt;/p&gt;
+
+
+&lt;h2 class=&quot;section-heading&quot;&gt;danandcassgetmarried.com - The RSVP Email&lt;/h2&gt;
+
+&lt;p&gt;For each POST through the API Gateway, we receive an SNS email message confirming our guest!&lt;/p&gt;
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass04.png&quot; alt=&quot;danandcassgetmarried.com 04&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The final email message!&lt;/span&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;danandcassgetmarried.com - The Bill&lt;/h2&gt;
+
+&lt;p&gt;So, our wedding is over, the site has done it&#39;s job. Let&#39;s see how much it actually cost me from AWS.&lt;/p&gt;
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass05.png&quot; alt=&quot;danandcassgetmarried.com 05&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The Bill #1 - Nothing paid for the API Gateway&lt;/span&gt;
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass06.png&quot; alt=&quot;danandcassgetmarried.com 06&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The Bill #2 - SNS for emails, free too!&lt;/span&gt;
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass07.png&quot; alt=&quot;danandcassgetmarried.com 07&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The Bill #3 - Data Transfer, $0.06&lt;/span&gt;
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass08.png&quot; alt=&quot;danandcassgetmarried.com 08&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The Bill #4 - S3, $0.06&lt;/span&gt;
+
+&lt;a href=&quot;#&quot;&gt;
+    &lt;img src=&quot;/img/danandcass09.png&quot; alt=&quot;danandcassgetmarried.com 09&quot; /&gt;
+&lt;/a&gt;
+&lt;span class=&quot;caption text-muted&quot;&gt;The Bill #5 - Route 53 - $1&lt;/span&gt;
+
+&lt;p&gt;So, under $2! My Route53 entry here includes both the RSVP site, and my personal domain (dddanmar.net)&lt;/p&gt;
+
+&lt;h2 class=&quot;section-heading&quot;&gt;danandcassgetmarried.com - Finale&lt;/h2&gt;
+&lt;p&gt;Very cool, we&#39;ve used static hosting, custom domains, API Gateway, Lambda and SNS to create an RSVP site.&lt;/p&gt;
+&lt;p&gt;There are far more fine grained controls for API Gateway, but if you have the option to keep it simple, always keep it simple, stupid.&lt;/p&gt;
+
+&lt;/p&gt;&lt;/p&gt;
+</description>
+        <pubDate>Tue, 20 Oct 2015 22:00:00 +1000</pubDate>
+        <link>http://dddanmar.net/2015/10/20/rsvp-site/</link>
+        <guid isPermaLink="true">http://dddanmar.net/2015/10/20/rsvp-site/</guid>
+        
+        
+      </item>
     
       <item>
         <title>Fun with AWS IoT Beta</title>
@@ -27,7 +134,7 @@
 
 &lt;h2 class=&quot;section-heading&quot;&gt;The Raspberry Pi Button - Hardware&lt;/h2&gt;
 
-&lt;p&gt;I&#39;ve just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled &lt;a href=&quot;https://www.arduino.cc/&quot;&gt;Arduino&lt;/a&gt; were placed on the table for guests to push and take a smile.&lt;/p&gt;
+&lt;p&gt;I&#39;ve just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled &lt;a href=&quot;https://www.arduino.cc/&quot;&gt;Arduino&lt;/a&gt; were placed on the table for guests to push and take a photo.&lt;/p&gt;
 
 &lt;p&gt;The box is well over sized for the hardware that was used inside of it, and can easily fit a &lt;a href=&quot;http://raspberry.piaustralia.com.au/products/raspberry-pi-2-model-b&quot;&gt;Rasperry Pi&lt;/a&gt;, &lt;a href=&quot;http://www.jaycar.com.au/Sight-%26-Sound-Personal/MP3-iPod-Accessories/MP3-iPod-Accessories/5000mAh-Portable-Rechargeable-Power-Bank/p/MB3724&quot;&gt;USB battery pack&lt;/a&gt;, &lt;a href=&quot;http://www.jaycar.com.au/IT-Products/Networking/Wireless-Hardware-%26-Accessories/N150-Nano-USB-2-0-Wireless-Network-Adaptor/p/YN8309&quot;&gt;Wifi module&lt;/a&gt;, and of course, &lt;a href=&quot;http://www.jaycar.com.au/Electromechanical-Components/Switches/Pushbutton/SWITCH-PUSH-WATPRF-MOM-SPST-5ADC-D%3D30MM/p/SP0732&quot;&gt;the button&lt;/a&gt;.&lt;/p&gt;
 
@@ -50,7 +157,7 @@
 &lt;h2 class=&quot;section-heading&quot;&gt;The Raspberry Pi Button - Software&lt;/h2&gt;
 &lt;p&gt;The Pi&#39;s button is driven from the &lt;a href=&quot;https://github.com/aws/aws-iot-device-sdk-js&quot;&gt;NodeJS SDK&lt;/a&gt; supplied from AWS.&lt;/p&gt;
 
-&lt;p&gt;I&#39;ll admit I spent a fair bit of time trying to work out how work with the SDK, and after some hair pulling I was found this lovely &lt;a href=&quot;https://github.com/sreid/aws-iot-raspberry-pi-how-to&quot;&gt;github repo&lt;/a&gt; from &lt;a href=&quot;https://github.com/sreid/&quot;&gt;sreid&lt;/a&gt;. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.&lt;/p&gt;
+&lt;p&gt;I&#39;ll admit I spent a fair bit of time trying to work out how to work with the SDK, and after some hair pulling I was found this lovely &lt;a href=&quot;https://github.com/sreid/aws-iot-raspberry-pi-how-to&quot;&gt;github repo&lt;/a&gt; from &lt;a href=&quot;https://github.com/sreid/&quot;&gt;sreid&lt;/a&gt;. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.&lt;/p&gt;
 
 &lt;p&gt;For the sender, using the npm module &lt;a href=&quot;https://www.npmjs.com/package/onoff&quot;&gt;&#39;onoff&#39;&lt;/a&gt; makes it very easy to read the GPIO status of a pin with NodeJS. All I needed to do here was put a new block at the bottom of the pi.js file from &lt;a href=&quot;https://github.com/sreid&quot;&gt;sreid&#39;s&lt;/a&gt; &lt;a href=&quot;https://github.com/sreid/aws-iot-raspberry-pi-how-to&quot;&gt;repository&lt;/a&gt;, and send that button state change off to AWS.&lt;/p&gt;
 
@@ -65,7 +172,7 @@
 
 &lt;h2 class=&quot;section-heading&quot;&gt;The Raspberry Pi Button - Python Receiver&lt;/h2&gt;
 
-&lt;p&gt;Now the button itself is set up and posting data to Amazon, it&#39;s time to think of how a this data can be consumed and used.&lt;/p&gt;
+&lt;p&gt;Now the button itself is set up and posting data to Amazon, it&#39;s time to think of how this data can be consumed and used.&lt;/p&gt;
 
 &lt;p&gt;As I mentioned earlier, I&#39;m not the biggest fan of NodeJS, so I was very keen to try out some Python to break free from the SDKs.&lt;/p&gt;
 

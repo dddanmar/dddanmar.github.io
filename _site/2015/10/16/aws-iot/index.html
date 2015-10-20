@@ -7,8 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast.">
-
-    <title>Fun with AWS IoT Beta - dddanmar.net</title>
+    <meta name="google-site-verification" content="0YY_TYBZhOi8jybQFMewLNtdfaDdd7VJM66QgxZ4XeQ" />
+    <title>Fun with AWS IoT Beta - dddanmar</title>
 
     <link rel="canonical" href="http://dddanmar.net/2015/10/16/aws-iot/">
 
@@ -32,6 +32,29 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+<meta content="dddanmar" property="og:site_name">
+
+  <meta content="Fun with AWS IoT Beta" property="og:title">
+
+
+  <meta content="article" property="og:type">
+
+
+  <meta content="DevOps Engineer, Team Builder, AWS Lover, All Round Great Guy from the Gold Coast." property="og:description">
+
+
+  <meta content="http://dddanmar.net/2015/10/16/aws-iot/" property="og:url">
+
+
+  <meta content="2015-10-16T22:00:00+10:00" property="article:published_time">
+  <meta content="http://dddanmar.net/about/" property="article:author">
+
+  <meta content="http://dddanmar.net/img/dddanmar.jpg" property="og:image">
+
+  
+
+
+  
 
 </head>
 
@@ -49,7 +72,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/">dddanmar.net</a>
+            <a class="navbar-brand" href="/">dddanmar</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -110,7 +133,7 @@
 
 <h2 class="section-heading">The Raspberry Pi Button - Hardware</h2>
 
-<p>I've just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled <a href="https://www.arduino.cc/">Arduino</a> were placed on the table for guests to push and take a smile.</p>
+<p>I've just had my wedding, and for a bit of maker flair I had built a small photobooth. It was nothing too fancy - a small wooden box purchased from the local arts store, a push button and an USB cabled <a href="https://www.arduino.cc/">Arduino</a> were placed on the table for guests to push and take a photo.</p>
 
 <p>The box is well over sized for the hardware that was used inside of it, and can easily fit a <a href="http://raspberry.piaustralia.com.au/products/raspberry-pi-2-model-b">Rasperry Pi</a>, <a href="http://www.jaycar.com.au/Sight-%26-Sound-Personal/MP3-iPod-Accessories/MP3-iPod-Accessories/5000mAh-Portable-Rechargeable-Power-Bank/p/MB3724">USB battery pack</a>, <a href="http://www.jaycar.com.au/IT-Products/Networking/Wireless-Hardware-%26-Accessories/N150-Nano-USB-2-0-Wireless-Network-Adaptor/p/YN8309">Wifi module</a>, and of course, <a href="http://www.jaycar.com.au/Electromechanical-Components/Switches/Pushbutton/SWITCH-PUSH-WATPRF-MOM-SPST-5ADC-D%3D30MM/p/SP0732">the button</a>.</p>
 
@@ -133,7 +156,7 @@
 <h2 class="section-heading">The Raspberry Pi Button - Software</h2>
 <p>The Pi's button is driven from the <a href="https://github.com/aws/aws-iot-device-sdk-js">NodeJS SDK</a> supplied from AWS.</p>
 
-<p>I'll admit I spent a fair bit of time trying to work out how work with the SDK, and after some hair pulling I was found this lovely <a href="https://github.com/sreid/aws-iot-raspberry-pi-how-to">github repo</a> from <a href="https://github.com/sreid/">sreid</a>. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.</p>
+<p>I'll admit I spent a fair bit of time trying to work out how to work with the SDK, and after some hair pulling I was found this lovely <a href="https://github.com/sreid/aws-iot-raspberry-pi-how-to">github repo</a> from <a href="https://github.com/sreid/">sreid</a>. It contains some ready to go code samples, as well as a great README.md file to guide you through setting up a Thing in the IoT page on the Amazon console.</p>
 
 <p>For the sender, using the npm module <a href="https://www.npmjs.com/package/onoff">'onoff'</a> makes it very easy to read the GPIO status of a pin with NodeJS. All I needed to do here was put a new block at the bottom of the pi.js file from <a href="https://github.com/sreid">sreid's</a> <a href="https://github.com/sreid/aws-iot-raspberry-pi-how-to">repository</a>, and send that button state change off to AWS.</p>
 
@@ -148,7 +171,7 @@
 
 <h2 class="section-heading">The Raspberry Pi Button - Python Receiver</h2>
 
-<p>Now the button itself is set up and posting data to Amazon, it's time to think of how a this data can be consumed and used.</p>
+<p>Now the button itself is set up and posting data to Amazon, it's time to think of how this data can be consumed and used.</p>
 
 <p>As I mentioned earlier, I'm not the biggest fan of NodeJS, so I was very keen to try out some Python to break free from the SDKs.</p>
 
@@ -177,6 +200,10 @@
 
                 <ul class="pager">
                     
+                    
+                    <li class="next">
+                        <a href="/2015/10/20/rsvp-site/" data-toggle="tooltip" data-placement="top" title="Cheap cheap wedding RSVP site">Next Post &rarr;</a>
+                    </li>
                     
                 </ul>
 
@@ -233,10 +260,20 @@
                     </li>
                     
                 </ul>
-                <p class="copyright text-muted">Copyright &copy; dddanmar.net 2015</p>
+                <p class="copyright text-muted">Copyright &copy; dddanmar 2015</p>
             </div>
         </div>
     </div>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-68974548-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
 </footer>
 
 <!-- jQuery -->
