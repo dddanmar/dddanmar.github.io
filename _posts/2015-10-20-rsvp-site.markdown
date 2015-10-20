@@ -1,0 +1,103 @@
+---
+layout:     post
+title:      "Cheap cheap wedding RSVP site"
+subtitle:   "S3 Static Hosting, AWS API Gateway, Lambda and SNS for a 20 cent RSVP site."
+date:       2015-10-20 12:00:00
+author:     "Dan Ward"
+header-img: "img/wedding-rsvp-01.jpg"
+---
+
+<p>My (now)-wife and I were married at the start of October this year.</p>
+
+<p>I wanted a nice way to get the RSVPs from our wedding guests, but needed a cheap way to do this.</p>
+
+<p>AWS provide a nice and simple way of deploying static HTML and JS websites, through <a href="http://docs.aws.amazon.com/AmazonS3/latest/dev/WebsiteHosting.html">Amazon S3 Static hosting</a>.</p>
+
+<p>If you name your S3 Bucket the same name as your incoming domain name, you can seamlessly host the page is if it was on your own server (racking up usage charges every hour).</p>
+
+<p>The best part about S3 - you are only paying for the traffic you are using. Since we had ~50 guests, the site will only really be loaded a maximum of 100 times.</p>
+
+<h2 class="section-heading">danandcassgetmarried.com - The Site</h2>
+
+<p>Our requirements were simple - a landing page with a button for RSVP, and a form for the guests to enter their RSVP details.</p>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass01.png" alt="danandcassgetmarried.com 01">
+</a>
+<span class="caption text-muted">The Landing Page</span>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass02.png" alt="danandcassgetmarried.com 02">
+</a>
+<span class="caption text-muted">The RSVP Form</span>
+
+<p>The page itself is very simple, you can <a href="https://github.com/dddanmar/danandcassgetmarried.com">view it on GitHub here</a>.
+<p>The main guts of the Javascript here is to simply post the request off to AWS Gateway.
+<p>{% gist 2780bdf781e476799d03 %}</p>
+
+
+<h2 class="section-heading">danandcassgetmarried.com - The API Gateway</h2>
+
+<p>Amazon's <a href="https://aws.amazon.com/api-gateway/">API gateway</a> allows you to build HTTP endpoints that can be consumed by anything that can make the request. For Javascript, we need to enable CORS, which can be done through the convoluted process listed in the <a href="http://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-cors.html">Amazon documentation here</a>.</p>
+
+<p>For my use case, I only need one endpoint created, a POST method on the endpoint /rsvp</p>
+
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass03.png" alt="danandcassgetmarried.com 03">
+</a>
+<span class="caption text-muted">The API Gateway Endpoint</span>
+
+<h2 class="section-heading">danandcassgetmarried.com - The Lambda Function</h2>
+
+<p>Lambda is an amazing little service from AWS that allows you to run NodeJS (and now Python) code to interact with other AWS services.</p>
+
+<p>The function below is receiving data from the webform, under the object 'event'. All we need to do is extract those details and create a string for a nice email message we can read when our guest RSVPs</p>
+
+<p>{% gist b515789a2ddde01b130b %}</p>
+
+
+<h2 class="section-heading">danandcassgetmarried.com - The RSVP Email</h2>
+
+<p>For each POST through the API Gateway, we receive an SNS email message confirming our guest!</p>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass04.png" alt="danandcassgetmarried.com 04">
+</a>
+<span class="caption text-muted">The final email message!</span>
+
+<h2 class="section-heading">danandcassgetmarried.com - The Bill</h2>
+
+<p>So, our wedding is over, the site has done it's job. Let's see how much it actually cost me from AWS.</p>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass05.png" alt="danandcassgetmarried.com 05">
+</a>
+<span class="caption text-muted">The Bill #1 - Nothing paid for the API Gateway</span>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass06.png" alt="danandcassgetmarried.com 06">
+</a>
+<span class="caption text-muted">The Bill #2 - SNS for emails, free too!</span>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass07.png" alt="danandcassgetmarried.com 07">
+</a>
+<span class="caption text-muted">The Bill #3 - Data Transfer, $0.06</span>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass08.png" alt="danandcassgetmarried.com 08">
+</a>
+<span class="caption text-muted">The Bill #4 - S3, $0.06</span>
+
+<a href="#">
+    <img src="{{ site.baseurl }}/img/danandcass09.png" alt="danandcassgetmarried.com 09">
+</a>
+<span class="caption text-muted">The Bill #5 - Route 53 - $1</span>
+
+<p>So, under $2! My Route53 entry here includes both the RSVP site, and my personal domain (dddanmar.net)</p>
+
+<h2 class="section-heading">danandcassgetmarried.com - Finale</h2>
+<p>Very cool, we've used static hosting, custom domains, API Gateway, Lambda and SNS to create an RSVP site.</p>
+<p>There are far more fine grained controls for API Gateway, but if you have the option to keep it simple, always keep it simple, stupid.</p>
+
