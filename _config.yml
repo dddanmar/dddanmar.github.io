@@ -8,6 +8,7 @@ url: "http://dddanmar.net"
 twitter_username: dddanmar
 github_username:  dddanmar
 facebook_username:  dddanmar
+comments: true
 
 # Build settings
 markdown: kramdown
