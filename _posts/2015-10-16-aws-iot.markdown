@@ -1,10 +1,11 @@
 ---
-layout:     post
-title:      "Fun with AWS IoT Beta"
-subtitle:   "RasPi, NodeJS, and Python with the IoT Beta from AWS, a round the world doorbell."
-date:       2015-10-16 12:00:00
-author:     "Dan Ward"
-header-img: "img/post-bg-01.jpg"
+title: Fun with AWS IoT Beta
+date: 2015-10-16 12:00:00 Z
+layout: post
+subtitle: RasPi, NodeJS, and Python with the IoT Beta from AWS, a round the world
+  doorbell.
+author: Dan Ward
+header-img: img/post-bg-01.jpg
 ---
 
 <blockquote><a href="https://github.com/dddanmar/aws-iot-raspberry-pi-button">tl;dr; code here https://github.com/dddanmar/aws-iot-raspberry-pi-button</a></blockquote>
